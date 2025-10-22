@@ -1,0 +1,178 @@
+DROP DATABASE IF EXISTS helpers_on_hand;
+DROP USER IF EXISTS 'manager'@'localhost';
+
+CREATE DATABASE IF NOT EXISTS helpers_on_hand;
+USE helpers_on_hand;
+
+CREATE USER 'manager'@'localhost' IDENTIFIED BY 'hohManager';
+GRANT SELECT ,
+	INSERT ,
+	UPDATE ,
+	DELETE ,
+	CREATE ,
+	FILE
+ON *.*
+TO 'manager'@'localhost' IDENTIFIED BY 'hohManager'
+WITH
+	MAX_QUERIES_PER_HOUR 0
+	MAX_CONNECTIONS_PER_HOUR 0
+	MAX_UPDATES_PER_HOUR 0
+	MAX_USER_CONNECTIONS 0;
+
+CREATE TABLE IF NOT EXISTS address
+(
+	Person_id int(4) NOT NULL,
+	A_street_line_1 varchar(50) DEFAULT NULL,
+	A_street_line_2 varchar(50) DEFAULT NULL,
+	A_city varchar(50) DEFAULT NULL,
+	A_state varchar(30) DEFAULT NULL,
+	A_zip varchar(10) DEFAULT NULL
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS chore
+(
+	Chore_name varchar(50) NOT NULL,
+	How_many_helpers_needed int(10) DEFAULT NULL,
+	fk_Manager int(4) DEFAULT NULL,
+	fk_Helper int(4) DEFAULT NULL,
+	fk_Client int(4) DEFAULT NULL
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS chore_status
+(
+	Transaction_id int(10) NOT NULL,
+	New_request tinyint(1) NOT NULL DEFAULT 1,
+	Under_review tinyint(1) NOT NULL DEFAULT 0,
+	Scheduled tinyint(1) NOT NULL DEFAULT 0,
+	Help_is_on_the_way tinyint(1) NOT NULL DEFAULT 0,
+	Completed tinyint(1) NOT NULL DEFAULT 0
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS name
+(
+	f_name varchar(50) DEFAULT NULL,
+	l_name varchar(50) DEFAULT NULL,
+	m_int varchar(4) DEFAULT NULL,
+	Person_id int(4) NOT NULL
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS person
+(
+	Person_id int(4) NOT NULL,
+	Name varchar(50) DEFAULT NULL,
+	Address varchar(50) DEFAULT NULL,
+	Phone varchar(12) DEFAULT NULL,
+	Email varchar(50) DEFAULT NULL,
+	Special_notes varchar(100) DEFAULT NULL,
+	Background_check tinyint(1) NOT NULL DEFAULT 0,
+	Role_type varchar(7) DEFAULT NULL
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS request
+(
+	Transaction_id int(6) NOT NULL,
+	Chore_name varchar(50) DEFAULT NULL,
+	Chore_status varchar(20) DEFAULT NULL,
+	Requestor_id int(4) DEFAULT NULL,
+	Entry_date timestamp NOT NULL DEFAULT current_timestamp(),
+	Due_date date DEFAULT NULL,
+	Due_time time DEFAULT NULL,
+	Helper_id_1 int(4) DEFAULT NULL,
+	Helper_id_2 int(4) DEFAULT NULL,
+	Assigning_manager int(4) DEFAULT NULL
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS users
+(
+	Person_id int(11) NOT NULL,
+	Username varchar(30) DEFAULT NULL,
+	Passphrase varchar(100) DEFAULT NULL,
+	Access_role varchar(9) DEFAULT NULL
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE address
+	ADD PRIMARY KEY (Person_id);
+
+ALTER TABLE chore
+	ADD PRIMARY KEY (Chore_name);
+
+ALTER TABLE chore_status
+	ADD PRIMARY KEY (Transaction_id);
+
+ALTER TABLE name
+	ADD PRIMARY KEY (Person_id);
+
+ALTER TABLE person
+	ADD PRIMARY KEY (Person_id);
+
+ALTER TABLE request
+	ADD PRIMARY KEY (Transaction_id);
+
+ALTER TABLE users
+	ADD PRIMARY KEY (Person_id);
+  
+
+INSERT INTO name
+(
+	f_name,
+	l_name,
+	m_int,
+	Person_id
+)
+VALUES
+	('Coral', 'Rose', 'M', 1001),
+	('Brandy', 'Michaels', 'R', 1002),
+	('Marcus', 'Singleton', 'D', 1003),
+	('Siam', 'Ahmed', 'AP', 1004),
+	('Katara', 'South', 'A', 1005);
+
+INSERT INTO address
+(
+	Person_id,
+	A_street_line_1,
+	A_street_line_2,
+	A_city,
+	A_state,
+	A_zip
+)
+VALUES
+	(1001, '1234 Oak Hill Dr', 'Apt 101', 'Mytown', 'FL', '32927'),
+	(1002, '1244 Elm Ct', '', 'Mytown', 'FL', '32927'),
+	(1003, '2245 Rosebud St', '', 'Yourtown', 'IN', '47462'),
+	(1004, '2255 Daisy Ln', '', 'Yourtown', 'IN', '47462'),
+	(1005, '3345 Miracle Rd', 'Unit 2', 'Ourtown', 'PA', '18974');
+
+INSERT INTO Person
+(
+	Person_id,
+	Phone,
+	Email,
+	Special_notes,
+	Background_check,
+	Role_type
+)
+VALUES
+	(1001, '321-636-3402', 'cmrose@fake.com', 'No notes', 1, 'Helper'),
+	(1002, '321-636-4402', 'brmich@fake.com', 'Sensitive to strong scents', 1, 'Client'),
+	(1003, '812-636-5502', 'marsing@fake.com', '', 1, 'Helper'),
+	(1004, '812-636-7702', 'siaahmed@fake.com', '', 0, 'Client'),
+	(1005, '717-636-8802', 'katsou@fake.com', '', 0, 'Manager');
+
+INSERT INTO chore
+(
+	Chore_name,
+	How_many_helpers_needed
+)
+VALUES
+	('Dishwashing', 1),
+	('Laundry', 1),
+	('Yardwork', 1),
+	('Errand', 1),
+	('Bills', 1);
