@@ -15,6 +15,9 @@ Demo
   4-8 Minutes, moving around in the website adding data, then showing the changes made it to the database
   1-2 Minutes, brief outline of what I will do for the rest of the semester
 
+Known issues:
+Login page and Home page are the only ones currently accessible through interactions
+To hit the data entry screen, you must enter the URL directly.
 
 Helpers on Hand Installation and Setup
 
