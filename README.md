@@ -2,23 +2,6 @@
 C450 Project Fall 2025
 Jennifer Rose
 
-Product Brochure
-  Demo Link
-  Name
-  Project Title
-  Project Webpage URL
-  List of features and systems required to run the program
-  Block diagram
-
-Demo
-  1-2 Minutes, 5 slides: what I'm going to show
-  4-8 Minutes, moving around in the website adding data, then showing the changes made it to the database
-  1-2 Minutes, brief outline of what I will do for the rest of the semester
-
-Known issues:
-Login page and Home page are the only ones currently accessible through interactions
-To hit the data entry screen, you must enter the URL directly.
-
 Helpers on Hand Installation and Setup
 
 Establish Database
@@ -41,3 +24,13 @@ Open Interface
 1. New web browser window
 2. URL: localhost/HOH_Home_Page.php
   
+Known Issues:
+Only two working pages.
+
+Enclosures:
+-- Product Brochure
+-- Powerpoint slides
+-- Demo Link
+   1-2 Minutes, 5 slides: what I'm going to show
+   4-8 Minutes, moving around in the website adding data, then showing the changes made it to the database
+   1-2 Minutes, brief outline of what I will do for the rest of the semester
