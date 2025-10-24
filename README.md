@@ -37,4 +37,7 @@ Establish Database
 12. Paste into SQL window in phpMyAdmin SQL window
 13. Click Go
   
+Open Interface
+1. New web browser window
+2. URL: localhost/HOH_Home_Page.php
   
