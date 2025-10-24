@@ -1,6 +1,5 @@
 HOH.css
 
-
 .container {
   background-color: white;
   font-family: Tahoma;
@@ -71,6 +70,25 @@ HOH.css
   height: 600px;
 }
 
+#bodyContent3 {
+  background-color: #88cc00;
+  width: 900px;
+  float: left;
+  text-align: center;
+  color: purple;
+  font-style: bold;
+}
+
+#bodyContent4 {
+  background-color: #88cc00;
+  width: 900px;
+  float: left;
+  text-align: center;
+  color: purple;
+  font-style: bold;
+  height: 800px;
+}
+
 #formLabel {
   color: purple;
   width: 200px;
@@ -89,4 +107,9 @@ HOH.css
 
 h1 {
   font-size: 35pt;
+}
+
+h3 {
+  font-size: 25pt;
+  font-family: Arial;
 }
