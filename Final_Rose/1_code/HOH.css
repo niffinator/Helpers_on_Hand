@@ -1,0 +1,141 @@
+HOH.css
+
+.container {
+  background-color: white;
+  font-family: Tahoma;
+  font-size: 20pt;
+  max-width: 900px;
+  border-color: black;
+  border: 10px
+}
+
+#header1 {
+  background-color: blue;
+  float: left;
+  max-width: 900px;
+  border-bottom-color: blue;
+  border-bottom-width: 900px;
+  padding-bottom: 10px;
+}
+
+#header2 {
+  background-color: blue;
+  float: left;  
+  max-width: 900px;
+}
+
+#loginButton {
+  background-color: #88cc00;	
+  width: 300px;
+  height: 50px;
+  text-align: center;
+  font-size: 12pt;
+  font-weight: bold;
+  color: blue;
+  border-color: blue;
+  border-width: 5px;
+  padding: 10px;
+}
+
+#loginButton:hover {
+  background-color: #dfff80;	
+  width: 350px;
+  height: 75px;
+  text-align: center;
+  font-size: 13pt;
+  font-weight: bold;
+  color: blue;
+  border-color: blue;
+  border-width: 6px;
+  padding: 10px;
+}
+
+#submitButton {
+  background-color: #00b33c;	
+  width: 300px;
+  height: 50px;
+  text-align: center;
+  font-size: 12pt;
+  font-weight: bold;
+  color: purple;
+  border-color: purple;
+  border-width: 5px;
+  padding: 10px;
+}    
+
+#submitButton:hover {
+  background-color: #dfff80;	
+  width: 350px;
+  height: 75px;
+  text-align: center;
+  font-size: 13pt;
+  font-weight: bold;
+  color: purple;
+  border-color: purple;
+  border-width: 6px;
+  padding: 10px;
+}
+
+#bodyContent1 {
+  background-color: #88cc00;
+  width: 900px;
+  float: left;
+  text-align: center;
+  color: white;
+  font-style: bold;
+  height: 450px;
+}
+
+#bodyContent2 {
+  background-color: #88cc00;
+  width: 900px;
+  float: left;
+  text-align: center;
+  color: purple;
+  font-style: bold;
+  height: 600px;
+}
+
+#bodyContent3 {
+  background-color: #88cc00;
+  width: 900px;
+  float: left;
+  text-align: center;
+  color: purple;
+  font-style: bold;
+}
+
+#bodyContent4 {
+  background-color: #88cc00;
+  width: 900px;
+  float: left;
+  text-align: center;
+  color: purple;
+  font-style: bold;
+  height: 800px;
+}
+
+#formLabel {
+  color: purple;
+  width: 200px;
+  font-size: 25pt;
+  font-style: bold;
+  border: 9px solid #88cc00;
+}
+
+#formField {
+  color: purple;
+  width: 300px;
+  font-size: 15pt;
+  font-style: bold;
+  border: 2px solid purple;
+}
+
+h1 {
+  font-size: 35pt;
+}
+
+h3 {
+  font-size: 25pt;
+  font-family: Arial;
+}
