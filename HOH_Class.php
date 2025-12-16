@@ -19,11 +19,10 @@ class HOH
 		
 			if (mysqli_connect_errno())
 			{
-				echo "Failed to connect to MySQL: " . mysqli_connect_error();
+				echo "Failed to connect to the database: " . mysqli_connect_error();
 			}
 			else
-				echo "Sucessful connection to MySQL </br>";
-				echo "";			
+				echo "Sucessfully connected to the database: helpers_on_hand </br>";
 	}
 	
 	// Destructor
@@ -32,68 +31,206 @@ class HOH
 		mysqli_close ($this->Con);
 	}
 	
-	// Write all the get() functions from the database tables
-	public function get_person_by_role_from_DB($roleType)
+	// Show all the people in the database
+	public function get_person_table_db()
 	{
-		$sql = "SELECT name.Person_id, name.f_name, name.l_name, person.Role_type
-				FROM person, name
-				WHERE person.Role_type = '$roleType'
-				AND person.Person_id = name.Person_id;";
-		$result = mysqli_query ($this->Con,$sql);
+		$sql = "SELECT personid, fname, lname, midname,
+					phone, email, address1, address2, city,
+					state, zip, notes, background, role
+				FROM person";
+		$result = mysqli_query($this->Con,$sql);
 		$arrayResult = array();
-		echo("Participants by role");
+		echo("-----</br>");
 		while($row = mysqli_fetch_array($result))
 		{
 			$arrayResult[] = $row;
-			$row['Person_id'] . " ".
-			$row['f_name'] . " ".
-			$row['f_name'] . " ".
-			$row['Role_type'];
-			
+			$row['personid'] . " " .
+			$row['fname'] . " " .
+		    $row['midname'] . " " .
+			$row['lname'] . " " .
+			$row['address1'] . " " .
+			$row['address2'] . " " .
+		    $row['city'] . " " .
+			$row['state'] . " " .
+			$row['zip'] . " " .
+			$row['phone'] . " " .
+		    $row['email'] . " " .
+			$row['background'] . " " .
+			$row['notes'] . " " .
+			$row['role'];
+		}
+		echo("----");
+		return($arrayResult);
+	}
+	
+	// Show all the chores in the database
+	public function get_chores_table_db()
+	{
+		$sql = "SELECT choreid, chorename, choredesc, noofstaff
+				FROM chore";
+		$result = mysqli_query($this->Con,$sql);
+		$arrayResult = array();
+		echo("-----</br>");
+		while($row = mysqli_fetch_array($result))
+		{
+			$arrayResult[] = $row;
+			$row['choreid'] . " " .
+			$row['chorename'] . " " .
+		    $row['choredesc'] . " " .
+			$row['noofstaff'];
+		}
+		echo("----");
+		return($arrayResult);
+	}
+	
+	// Show all the roles in the database
+	public function get_roles_table_db()
+	{
+		$sql = "SELECT roleid, rolename
+				FROM role";
+		$result = mysqli_query($this->Con,$sql);
+		$arrayResult = array();
+		echo("-----</br>");
+		while($row = mysqli_fetch_array($result))
+		{
+			$arrayResult[] = $row;
+			$row['roleid'] . " " .
+			$row['rolename'];
+		}
+		echo("----");
+		return($arrayResult);
+	}
+
+	// Show all the statuses in the database
+	public function get_status_table_db()
+	{
+		$sql = "SELECT statusid, statusdesc
+				FROM status";
+		$result = mysqli_query($this->Con,$sql);
+		$arrayResult = array();
+		echo("-----</br>");
+		while($row = mysqli_fetch_array($result))
+		{
+			$arrayResult[] = $row;
+			$row['statusid'] . " " .
+			$row['statusdesc'];
+		}
+		echo("----");
+		return($arrayResult);
+	}
+
+	// Show all the volunteers in the database
+	public function get_handraise_table_db()
+	{
+		$sql = "SELECT handraiseid, helperid, availdate,
+					availtime, availchores
+				FROM handraise";
+		$result = mysqli_query($this->Con,$sql);
+		$arrayResult = array();
+		echo("-----</br>");
+		while($row = mysqli_fetch_array($result))
+		{
+			$arrayResult[] = $row;
+			$row['handraiseid'] . " " .
+			$row['helperid'] . " " .
+		    $row['availdate'] . " " .
+			$row['availtime'] . " " .
+			$row['availchores'];
+		}
+		echo("----");
+		return($arrayResult);
+	}
+
+	// Show all the requests in the database
+	public function get_request_table_db()
+	{
+		$sql = "SELECT requestid, reqclientid, reqdate,
+					reqtime, reqchoreid, reqstatusid
+				FROM request";
+		$result = mysqli_query($this->Con,$sql);
+		$arrayResult = array();
+		echo("-----</br>");
+		while($row = mysqli_fetch_array($result))
+		{
+			$arrayResult[] = $row;
+			$row['requestid'] . " " .
+			$row['reqclientid'] . " " .
+		    $row['reqdate'] . " " .
+			$row['reqtime'] . " " .
+			$row['reqchoreid'] . " " .
+			$row['reqstatusid'];
+		}
+		echo("----");
+		return($arrayResult);
+	}
+
+	// Show all the transactions in the database
+	public function get_transaction_table_db()
+	{
+		$sql = "SELECT transactionid, requestid, reqdate,
+					reqtime, clientid, helperid1, helperid2,
+					helperid3, helperid4, helperid5, managerid,
+					schdate, schtime, transtatusid
+				FROM transaction";
+		$result = mysqli_query($this->Con,$sql);
+		$arrayResult = array();
+		echo("-----</br>");
+		while($row = mysqli_fetch_array($result))
+		{
+			$arrayResult[] = $row;
+			$row['transactionid'] . " " .
+			$row['requestid'] . " " .
+		    $row['reqdate'] . " " .
+			$row['reqtime'] . " " .
+			$row['clientid'] . " " .
+			$row['helperid1'] . " " .
+		    $row['helperid2'] . " " .
+			$row['helperid3'] . " " .
+			$row['helperid4'] . " " .
+			$row['helperid5'] . " " .
+		    $row['managerid'] . " " .
+			$row['background'] . " " .
+			$row['schdate'] . " " .
+			$row['schtime'] . " " .
+		    $row['transtatusid'];
+		}
+		echo("----");
+		return($arrayResult);
+	}
+	
+	// Write all the get() functions from the database tables
+	public function get_person_by_role_from_DB($roleid)
+	{
+		$sql = "SELECT person.personid, person.fname, person.lname, role.rolename
+				FROM person, role
+				WHERE role = '$roleid';";
+		$result = mysqli_query ($this->Con,$sql);
+		$arrayResult = array();
+		echo("All " + role.rolename + "s:</br>");
+		while($row = mysqli_fetch_array($result))
+		{
+			$arrayResult[] = $row;
+			$row['personid'] . " ".
+			$row['fname'] . " ".
+			$row['lname'] . " ".
+			$row['role.rolename'];			
 		}
 		return($arrayResult);
 	}
 	
 	public function get_existing_chores_from_DB()
 	{
-		$sql = "SELECT Chore_name FROM chore;";
+		$sql = "SELECT chorename FROM chore;";
 		$result = mysqli_query($this->Con,$sql);
 		$arrayResult = array();
 		echo("Chore Table");
 		while($row = mysqli_fetch_array($result))
 		{
 			$arrayResult[] = $row;
-			$row['Chore_name'];
+			$row['chorename'];
 		}
 		return($arrayResult);
-	}
-	
-	public function get_all_users_from_DB()
-	{
-		$sql = "SELECT name.Person_id, name.f_name, name.m_int, name.l_name,
-				address.A_street_line_1, address.A_street_line_2, address.A_city,
-				address.A_state, address.A_zip, person.Phone, person.Email
-				FROM name, address, person
-				WHERE name.Person_id = address.Person_id
-				AND name.Person_id = person.Person_id;";
-		$result = mysqli_query($this->Con,$sql);
-		$arrayResult = array();
-		echo("All Users");
-		while($row = mysqli_fetch_array($result))
-		{
-			$arrayResult[] = $row;
-			$row['Person_id'] . ": " .
-			$row['f_name'] . " " .
-			$row['m_int'] . " " .
-			$row['l_name'] . "Address: " .
-			$row['A_street_line_1'] . " " .
-			$row['A_street_line_2'] . " " .
-			$row['A_city'] . ", " .
-			$row['A_state'] . "  " .
-			$row['A_zip'];					
-		}
-		return($arrayResult);
-	}		
+	}	
 }
 
 	// -----------------------------------------------------

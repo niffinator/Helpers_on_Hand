@@ -13,7 +13,20 @@
 		}
 		function goToChoreForm(){
 			var personForm = window.location.replace("http://localhost/HOH_Chore_Form.php");
-		}		
+		}
+		function goToDisplayPeople(){
+			var personForm = window.location.replace("http://localhost/HOH_PersonReport.php");
+		}
+		function goToDisplayChores(){
+			var personForm = window.location.replace("http://localhost/HOH_ChoreReport.php");
+		}
+		function goToClientRequests(){
+			var personForm = window.location.replace("http://localhost/HOH_ClientRequestsReport.php");
+		}
+		function goToVolunteerCalendar(){
+			var personForm = window.location.replace("http://localhost/HOH_VolunteerCalendarReport.php");
+		}
+		
 	</script>
 </head>
 
@@ -29,7 +42,7 @@
 	
 	</form></center>
 	<center><button id='submitButton' onclick='goToPersonForm();'>ADD NEW</center></br><center>
-	<center><button id='submitButton' onclick='goToHome();'>DISPLAY ALL</center></br><center>	
+	<center><button id='submitButton' onclick='goToDisplayPeople();'>DISPLAY ALL</center></br><center>	
 	</div>
 	
 	<div id='bodyContent3'>
@@ -38,7 +51,16 @@
 	
 	</form></center>
 	<center><button id='submitButton' onclick='goToChoreForm();'>ADD NEW</center></br><center>
-	<center><button id='submitButton' onclick='goToHome();'>DISPLAY ALL</center></br><center>	
+	<center><button id='submitButton' onclick='goToDisplayChores();'>DISPLAY ALL</center></br><center>	
+	</div>
+	
+	<div id='bodyContent3'>
+	<h3>PROCESS REQUESTS</h3>
+	<center><form>
+	
+	</form></center>
+	<center><button id='submitButton' onclick='goToClientRequests();'>CLIENT REQUESTS</center></br><center>
+	<center><button id='submitButton' onclick='goToVolunteerCalendar();'>VOLUNTEER CALENDAR</center></br><center>	
 	</div>
 
 </body>

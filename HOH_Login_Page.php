@@ -25,12 +25,16 @@
 		</div>
 	
 		<div id='bodyContent2'>
-		<h1>Helpers on Hand Login Page</h1>
+		<h1>Helpers on Hand Login Page</h1>		
+		<form style='font-size: 18pt' action='HOH_ProcessLogin.php' method='POST' target='_self'>
 		<center><table>
-		<th><tr><td id='formLabel'>User Name:</td><td></td><td id='formField' input type='text'></td></tr></th>
-		<tr><td id='formLabel'>Password:</td><td></td><td id='formField' input type='password'></td></tr>
-		</table></center></br></br></br>
-		<center><button id='submitButton' onclick='goToHome();'>SUBMIT</center></br><center>
+		<tr><td>User Name:   </td><td><input type='text' name='username'></td></tr>
+		<tr><td>Password:   </td><td><input type='password' name='password'></td></tr>
+		<tr><td><label>Role:</label></td><td><input type='radio' name='Role_type' value='1'>Client
+											<input type='radio' name='Role_type' value='2'>Helper
+											<input type='radio' name='Role_type' value='3'>Manager</td></tr></table></center>
+		<hr>
+		<center><button id='submitButton' input type='submit'>SUBMIT</button>     <button id='submitButton' type='button' onclick='goToHome();'>EXIT</button></center></form>
 		</div>
 
 	</div>

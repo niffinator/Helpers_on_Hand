@@ -1,10 +1,11 @@
 DROP DATABASE IF EXISTS helpers_on_hand;
-DROP USER IF EXISTS 'manager'@'localhost';
 
 CREATE DATABASE IF NOT EXISTS helpers_on_hand;
-USE helpers_on_hand;
+
+DROP USER IF EXISTS 'manager'@'localhost';
 
 CREATE USER 'manager'@'localhost' IDENTIFIED BY 'hohManager';
+
 GRANT SELECT ,
 	INSERT ,
 	UPDATE ,
@@ -19,160 +20,158 @@ WITH
 	MAX_UPDATES_PER_HOUR 0
 	MAX_USER_CONNECTIONS 0;
 
-CREATE TABLE IF NOT EXISTS address
-(
-	Person_id int(4) NOT NULL,
-	A_street_line_1 varchar(50) DEFAULT NULL,
-	A_street_line_2 varchar(50) DEFAULT NULL,
-	A_city varchar(50) DEFAULT NULL,
-	A_state varchar(30) DEFAULT NULL,
-	A_zip varchar(10) DEFAULT NULL
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+USE helpers_on_hand;
 
-CREATE TABLE IF NOT EXISTS chore
+CREATE TABLE IF NOT EXISTS role
 (
-	Chore_name varchar(50) NOT NULL,
-	How_many_helpers_needed int(10) DEFAULT NULL,
-	fk_Manager int(4) DEFAULT NULL,
-	fk_Helper int(4) DEFAULT NULL,
-	fk_Client int(4) DEFAULT NULL
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-CREATE TABLE IF NOT EXISTS chore_status
-(
-	Transaction_id int(10) NOT NULL,
-	New_request tinyint(1) NOT NULL DEFAULT 1,
-	Under_review tinyint(1) NOT NULL DEFAULT 0,
-	Scheduled tinyint(1) NOT NULL DEFAULT 0,
-	Help_is_on_the_way tinyint(1) NOT NULL DEFAULT 0,
-	Completed tinyint(1) NOT NULL DEFAULT 0
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-CREATE TABLE IF NOT EXISTS name
-(
-	f_name varchar(50) DEFAULT NULL,
-	l_name varchar(50) DEFAULT NULL,
-	m_int varchar(4) DEFAULT NULL,
-	Person_id int(4) NOT NULL
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+	roleid int(1) NOT NULL,
+	rolename varchar(8) DEFAULT NULL,
+	PRIMARY KEY (roleid)
+);
 
 CREATE TABLE IF NOT EXISTS person
 (
-	Person_id int(4) NOT NULL,
-	Name varchar(50) DEFAULT NULL,
-	Address varchar(50) DEFAULT NULL,
-	Phone varchar(12) DEFAULT NULL,
-	Email varchar(50) DEFAULT NULL,
-	Special_notes varchar(100) DEFAULT NULL,
-	Background_check tinyint(1) NOT NULL DEFAULT 0,
-	Role_type varchar(7) DEFAULT NULL
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+	personid int(4) NOT NULL,
+	fname varchar(50) DEFAULT NULL,
+	lname varchar(50) DEFAULT NULL,
+	midname varchar(50) DEFAULT NULL,
+	phone varchar(20) DEFAULT NULL,
+	email varchar(100) DEFAULT NULL,
+	address1 varchar(100) DEFAULT NULL,
+	address2 varchar(100) DEFAULT NULL,
+	city varchar(50) DEFAULT NULL,
+	state varchar(30) DEFAULT NULL,
+	zip varchar(10) DEFAULT NULL,
+	notes varchar(200) DEFAULT NULL,
+	background varchar(7) DEFAULT NULL,
+	role int(1) DEFAULT NULL,
+	PRIMARY KEY (personid),
+	FOREIGN KEY (role) REFERENCES role(roleid)
+);
+
+CREATE TABLE IF NOT EXISTS chore
+(
+	choreid int(2) NOT NULL,
+	chorename varchar(50) DEFAULT NULL,
+	choredesc varchar(200) DEFAULT NULL,
+	noofstaff int(2) DEFAULT NULL,
+	PRIMARY KEY (choreid)
+);
+
+CREATE TABLE IF NOT EXISTS status
+(
+	statusid int(1) NOT NULL,
+	statusdesc varchar(20) DEFAULT NULL,
+	PRIMARY KEY (statusid)
+);
+
+CREATE TABLE IF NOT EXISTS handraise
+(
+	handraiseid int(10) NOT NULL,
+	helperid int(4) DEFAULT NULL,
+	availdate date DEFAULT NULL,
+	availtime time DEFAULT NULL,
+	availchores int(2) NOT NULL,
+	PRIMARY KEY (handraiseid),
+	FOREIGN KEY (helperid) REFERENCES person(personid) ON DELETE CASCADE,
+	FOREIGN KEY (availchores) REFERENCES chore(choreid) ON DELETE CASCADE
+);
 
 CREATE TABLE IF NOT EXISTS request
 (
-	Transaction_id int(6) NOT NULL,
-	Chore_name varchar(50) DEFAULT NULL,
-	Chore_status varchar(20) DEFAULT NULL,
-	Requestor_id int(4) DEFAULT NULL,
-	Entry_date timestamp NOT NULL DEFAULT current_timestamp(),
-	Due_date date DEFAULT NULL,
-	Due_time time DEFAULT NULL,
-	Helper_id_1 int(4) DEFAULT NULL,
-	Helper_id_2 int(4) DEFAULT NULL,
-	Assigning_manager int(4) DEFAULT NULL
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+	requestid int(10) NOT NULL,
+	reqclientid int(4) DEFAULT NULL,
+	reqdate date DEFAULT NULL,
+	reqtime time DEFAULT NULL,
+	reqchoreid int(2) DEFAULT NULL,
+	reqstatusid int(1) DEFAULT NULL,
+	PRIMARY KEY (requestid),
+	FOREIGN KEY (reqclientid) REFERENCES person(personid) ON DELETE CASCADE,
+	FOREIGN KEY (reqchoreid) REFERENCES chore(choreid) ON DELETE CASCADE,
+	FOREIGN KEY (reqstatusid) REFERENCES status(statusid) ON DELETE CASCADE
+);
 
-CREATE TABLE IF NOT EXISTS users
+CREATE TABLE IF NOT EXISTS transaction
 (
-	Person_id int(11) NOT NULL,
-	Username varchar(30) DEFAULT NULL,
-	Passphrase varchar(100) DEFAULT NULL,
-	Access_role varchar(9) DEFAULT NULL
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+	transactionid int(10) NOT NULL,
+	requestid int(10) DEFAULT NULL,
+	reqdate date DEFAULT NULL,
+	reqtime time DEFAULT NULL,
+	clientid int(4) DEFAULT NULL,
+	helperid1 int(4) DEFAULT NULL,
+	helperid2 int(4) DEFAULT NULL,
+	managerid int(4) DEFAULT NULL,
+	schdate date DEFAULT NULL,
+	schtime time DEFAULT NULL,
+	transtatusid int(1) DEFAULT NULL,
+	PRIMARY KEY (transactionid),
+	FOREIGN KEY (requestid) REFERENCES request(requestid) ON DELETE CASCADE,
+	FOREIGN KEY (clientid) REFERENCES person(personid) ON DELETE CASCADE,
+	FOREIGN KEY (helperid1) REFERENCES person(personid) ON DELETE CASCADE,
+	FOREIGN KEY (helperid2) REFERENCES person(personid) ON DELETE CASCADE,
+	FOREIGN KEY (managerid) REFERENCES person(personid) ON DELETE CASCADE,
+	FOREIGN KEY (transtatusid) REFERENCES status(statusid) ON DELETE CASCADE
+);
 
-ALTER TABLE address
-	ADD PRIMARY KEY (Person_id);
-
-ALTER TABLE chore
-	ADD PRIMARY KEY (Chore_name);
-
-ALTER TABLE chore_status
-	ADD PRIMARY KEY (Transaction_id);
-
-ALTER TABLE name
-	ADD PRIMARY KEY (Person_id);
-
-ALTER TABLE person
-	ADD PRIMARY KEY (Person_id);
-
-ALTER TABLE request
-	ADD PRIMARY KEY (Transaction_id);
-
-ALTER TABLE users
-	ADD PRIMARY KEY (Person_id);
-  
-
-INSERT INTO name
+INSERT INTO role
 (
-	f_name,
-	l_name,
-	m_int,
-	Person_id
+	roleid,
+	rolename
 )
 VALUES
-	('Coral', 'Rose', 'M', 1001),
-	('Brandy', 'Michaels', 'R', 1002),
-	('Marcus', 'Singleton', 'D', 1003),
-	('Siam', 'Ahmed', 'AP', 1004),
-	('Katara', 'South', 'A', 1005);
+	(1, 'client'),
+	(2, 'helper'),
+	(3, 'manager');
 
-INSERT INTO address
-(
-	Person_id,
-	A_street_line_1,
-	A_street_line_2,
-	A_city,
-	A_state,
-	A_zip
-)
-VALUES
-	(1001, '1234 Oak Hill Dr', 'Apt 101', 'Mytown', 'FL', '32927'),
-	(1002, '1244 Elm Ct', '', 'Mytown', 'FL', '32927'),
-	(1003, '2245 Rosebud St', '', 'Yourtown', 'IN', '47462'),
-	(1004, '2255 Daisy Ln', '', 'Yourtown', 'IN', '47462'),
-	(1005, '3345 Miracle Rd', 'Unit 2', 'Ourtown', 'PA', '18974');
-
-INSERT INTO Person
-(
-	Person_id,
-	Phone,
-	Email,
-	Special_notes,
-	Background_check,
-	Role_type
-)
-VALUES
-	(1001, '321-636-3402', 'cmrose@fake.com', 'No notes', 1, 'Helper'),
-	(1002, '321-636-4402', 'brmich@fake.com', 'Sensitive to strong scents', 1, 'Client'),
-	(1003, '812-636-5502', 'marsing@fake.com', '', 1, 'Helper'),
-	(1004, '812-636-7702', 'siaahmed@fake.com', '', 0, 'Client'),
-	(1005, '717-636-8802', 'katsou@fake.com', '', 0, 'Manager');
 
 INSERT INTO chore
 (
-	Chore_name,
-	How_many_helpers_needed
+	choreid,
+	chorename,
+	choredesc,
+	noofstaff
 )
 VALUES
-	('Dishwashing', 1),
-	('Laundry', 1),
-	('Yardwork', 1),
-	('Errand', 1),
-	('Bills', 1);
+	(01,'Dishwashing','Wash dishes', 1),
+	(02,'Laundry','wash, dry, fold, iron, put away up to 2 loads', 1),
+	(03,'Yardwork','raking leaves, mowing lawn, general maintenance up to 2 hours', 2),
+	(04,'Errand','to be determined, up to two hours', 1),
+	(05,'Bills', 'balance checkbook, pay bills',1);
+
+INSERT INTO status
+(
+	statusid,
+	statusdesc
+)
+VALUES
+	(1, 'submitted'),
+	(2, 'assigned'),
+	(3, 'scheduled'),
+	(4, 'under review'),
+	(5, 'cancelled'),
+	(6, 'completed');
+
+INSERT INTO Person
+(
+	personid,
+	fname,
+	lname,
+	midname,
+	phone,
+	email,
+	address1,
+	address2,
+	city,
+	state,
+	zip,
+	notes,
+	background,
+	role
+)
+VALUES
+	(1001, 'Esther', 'Munson', 'Joy', '5551231234', 'emj@here.com', '123 My Street', '', 'This Town', 'FL', '32927', 'Allergic to cats',1,3),
+	(1002, 'Mahala', 'Jenkins', 'Jorge', '5552232233', 'mjj@here.com', '123 Your Street', '', 'This Town', 'FL', '32927', 'Early Riser',1,2),
+	(1003, 'Jerrica', 'Aang', 'Major', '5553334444', 'jam@here.com', '456 Our Lane', '', 'That Town', 'IN', '47401', 'Wheelchair user',1,1),
+	(1004, 'Marcus', 'Zuko', 'Minor', '5554445555', 'mzm@here.com', '456 Hershey Parkway', '', 'That Town', 'IN', '47401', '',1,2),
+	(1005, 'Jonathan', 'Mister', 'Theo', '5555556666', 'jmt3@here.com', '789 Magic Drive', '', 'Our Town', 'PA', '19874', '',0,1);
+	

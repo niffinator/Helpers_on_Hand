@@ -15,7 +15,9 @@
 		function goToDataEntry(){
 			var home = window.location.replace("http://localhost/HOH_Data_Entry.php");
 		}		
-			
+		function goToAboutUs(){
+			var home = window.location.replace("http://localhost/HOH_About_Us.php");
+		}			
 	</script>
 </head>
 
@@ -29,7 +31,7 @@
 	<h1 align='center'>Helpers on Hand</h1>		
 	<center><button id='loginButton' onclick='goToLogin();'>Existing Users: Login</center></br>
 	<center><button id='loginButton' onclick='goToDataEntry()';>Managers: Data Entry</center></br>
-	<center><button id='loginButton'>Learn More About Us</center></br>
+	<center><button id='loginButton' onclick='goToAboutUs();'>Learn More About Us</center></br>
 	</div>
 	
 </body>

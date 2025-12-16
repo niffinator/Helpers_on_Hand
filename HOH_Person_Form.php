@@ -22,27 +22,40 @@
 	<img width='900px' src='heartHandsShort.jpg'>
 	</div>
 	
-	<div id='bodyContent4'>
+	<div id='bodyContent4'style='height: 900px'>
 	<h3>NEW PERSON</h3>
 	<form style='font-size: 18pt' action='HOH_ProcessPerson.php' method='POST' target='_self'>
-	Person ID (4 digits):   <input type='text' name='Person_id'></br><hr>
-	Background Check:   <input type='text' name='Background_check'></br>
-	<label>Role(s):  </label>
-	<input type='checkbox' name='Role_type' value='1'>Client   <input type='checkbox' name='Role_type' value='2'>Helper   <input type='checkbox' name='Role_type' value='3'>Manager</br><hr>
-	First Name:  <input type='text' name='f_name'></br>
-	Middle Initial:  <input type='text' name='m_int'></br>
-	Last Name:  <input type='text' name='l_name'></br><hr>
-	Address line 1:   <input type='text' name='A_street_line_1'></br> 
-	Address line 2:  <input type='text' name='A_street_line_2'></br>  
-	City:    <input type='text' name='A_city'></br>
-	State:    <input type='text' name='A_state'></br>
-	Zip code:  <input type='text' name='A_zip'></br><hr>
-	Phone:   <input type='text' name='Phone'></br>
-	Email:   <input type='text' name='Email'></br><hr>
-	Special Notes:   <input type='text' name='Special_notes'></br><hr>
-
-	<button id='submitButton' input type='submit'>SAVE</form></br></br>
-	<center><button id='submitButton' onclick='goToHome();'>EXIT</center></br>
+	<center><table>
+	<tr><td>Person ID (4 digits):   </td><td><input type='text' name='personid'></td></tr>
+	<tr><td>User Name:  </td><td><input type='text' name='username'></td></tr>
+	<tr><td>Password:  </td><td><input type='text' name='password'></td></tr></table></center>
+	<hr>
+	<center><table>
+	<tr><td>Background Check:   </td><td><input type='text' name='background'></td></tr>
+	<tr><td><label>Role(s):</label></td><td><input type='checkbox' name='role' value='1'>Client   
+	<input type='checkbox' name='role' value='2'>Helper   
+	<input type='checkbox' name='role' value='3'>Manager</td></tr></table></center>
+	<hr>
+	<center><table>
+	<tr><td>First Name:  </td><td><input type='text' name='fname'></td></tr>
+	<tr><td>Middle Initial:  </td><td><input type='text' name='midname'></td></tr>
+	<tr><td>Last Name:  </td><td><input type='text' name='lname'></td></tr></table></center>
+	<hr>
+	<center><table>
+	<tr><td>Address line 1:   </td><td><input type='text' name='address1'></td></tr> 
+	<tr><td>Address line 2:  </td><td><input type='text' name='address2'></td></tr>  
+	<tr><td>City:    </td><td><input type='text' name='city'></td></tr>
+	<tr><td>State:    </td><td><input type='text' name='state'></td></tr>
+	<tr><td>Zip code:  </td><td><input type='text' name='zip'></td></tr></table></center>
+	<hr>
+	<center><table>
+	<tr><td>Phone:   </td><td><input type='text' name='phone'></td></tr>
+	<tr><td>Email:   </td><td><input type='text' name='email'></td></tr></table></center>
+	<hr>
+	<center><table>
+	<tr><td>Special Notes:   </td><td><input type='text' name='notes'></td></tr></table></center>
+	<hr>
+	<center><button id='submitButton' input type='submit'>SAVE</button>     <button id='submitButton' type='button' onclick='goToHome();'>EXIT</button></center></form>
 	</div>
 	
 </body>
